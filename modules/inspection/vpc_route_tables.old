@@ -1,0 +1,111 @@
+resource "aws_route_table" "inspection_public_rt_az_a" {
+  vpc_id = aws_vpc.inspection.id
+  tags   = { Name = "AZ A inspection-public-route-table" }
+}
+
+resource "aws_route_table_association" "inspection_public_assoc_az_a" {
+  subnet_id      = aws_subnet.inspection_public_subnet_az_a.id
+  route_table_id = aws_route_table.inspection_public_rt_az_a.id
+}
+
+resource "aws_route" "inspection_public_to_pa_az_a" {
+  route_table_id         = aws_route_table.inspection_public_rt_az_a.id
+  destination_cidr_block = "0.0.0.0/0"
+  gateway_id   = aws_internet_gateway.inspection_igw.id
+}
+
+resource "aws_route_table" "inspection_public_rt_az_b" {
+  vpc_id = aws_vpc.inspection.id
+  tags   = { Name = "AZ B inspection-public-route-table" }
+}
+
+resource "aws_route_table_association" "inspection_public_assoc_az_b" {
+  subnet_id      = aws_subnet.inspection_public_subnet_az_b.id
+  route_table_id = aws_route_table.inspection_public_rt_az_b.id
+}
+
+resource "aws_route" "inspection_public_to_pa_az_b" {
+  route_table_id         = aws_route_table.inspection_public_rt_az_b.id
+  destination_cidr_block = "0.0.0.0/0"
+  gateway_id   = aws_internet_gateway.inspection_igw.id
+}
+
+
+
+
+#AZ A - Transit Route Table
+resource "aws_route_table" "inspection_transit_rt_az_a" {
+  vpc_id = aws_vpc.inspection.id
+  tags   = { Name = "AZ A inspection-transit-route-table" }
+}
+
+resource "aws_route_table_association" "inspection_transit_assoc_az_a" {
+  subnet_id      = aws_subnet.inspection_transit_subnet_az_a.id
+  route_table_id = aws_route_table.inspection_transit_rt_az_a.id
+}
+
+resource "aws_route" "inspection_transit_to_pa_az_a" {
+  route_table_id         = aws_route_table.inspection_transit_rt_az_a.id
+  destination_cidr_block = "0.0.0.0/0"
+ vpc_endpoint_id = aws_vpc_endpoint.inspection_gwlb_endpoint_az_a.id
+}
+
+
+
+
+#AZ B - Transit Route TableTransit Route Table 
+resource "aws_route_table" "inspection_transit_rt_az_b" {
+  vpc_id = aws_vpc.inspection.id
+  tags   = { Name = "AZ B inspection-transit-route-table" }
+}
+
+resource "aws_route_table_association" "inspection_transit_assoc_az_b" {
+  subnet_id      = aws_subnet.inspection_transit_subnet_az_b.id
+  route_table_id = aws_route_table.inspection_transit_rt_az_b.id
+}
+
+resource "aws_route" "inspection_transit_to_pa_az_b" {
+  route_table_id         = aws_route_table.inspection_transit_rt_az_b.id
+  destination_cidr_block = "0.0.0.0/0"
+  vpc_endpoint_id = aws_vpc_endpoint.inspection_gwlb_endpoint_az_b.id
+}
+
+
+
+
+
+# AZ A - Applicance Route Table 
+resource "aws_route_table" "inspection_appliance_rt_az_a" {
+  vpc_id = aws_vpc.inspection.id
+  tags   = { Name = "AZ A inspection-appliance-route-table" }
+}
+
+resource "aws_route_table_association" "inspection_appliance_assoc_az_a" {
+  subnet_id      = aws_subnet.inspection_appliance_subnet_az_a.id
+  route_table_id = aws_route_table.inspection_appliance_rt_az_a.id
+}
+
+resource "aws_route" "appliance_to_tgw_az_a" {
+  route_table_id         = aws_route_table.inspection_appliance_rt_az_a.id
+  destination_cidr_block = "10.0.0.0/8"
+  transit_gateway_id     = aws_ec2_transit_gateway.main.id
+}
+
+
+
+# AZ B - Applicance Route Table 
+resource "aws_route_table" "inspection_appliance_rt_az_b" {
+  vpc_id = aws_vpc.inspection.id
+  tags   = { Name = "AZ B inspection-appliance-route-table" }
+}
+
+resource "aws_route_table_association" "inspection_appliance_assoc_az_b" {
+  subnet_id      = aws_subnet.inspection_appliance_subnet_az_b.id
+  route_table_id = aws_route_table.inspection_appliance_rt_az_b.id
+}
+
+resource "aws_route" "appliance_to_tgw_az_b" {
+  route_table_id         = aws_route_table.inspection_appliance_rt_az_b.id
+  destination_cidr_block = "10.0.0.0/8"
+  transit_gateway_id     = aws_ec2_transit_gateway.main.id
+}
