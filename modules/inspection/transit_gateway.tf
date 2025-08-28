@@ -1,15 +1,10 @@
-#ASN for INX = 65000
-#ASN for LD3 = 65133
-#ASN for LD7 = 65173
-
-
 resource "aws_ec2_transit_gateway" "main" {
   description                     = "Centralised Inspection TGW"
-  amazon_side_asn                 = 64513
+  amazon_side_asn                 = var.amazon_side_asn
   auto_accept_shared_attachments  = "enable"
   default_route_table_association = "disable"
   default_route_table_propagation = "disable"
   dns_support                     = "enable"
   vpn_ecmp_support                = "enable"
-  tags                            = { Name = "tfp-${var.env}-net-${lookup(var.vpc_region_shortname,var.vpc_region)}-tgw" }
+  tags                            = merge(local.tags, { Name = "${local.name}-tgw" })
 }
