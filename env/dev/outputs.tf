@@ -2,10 +2,17 @@ output "vpc_cidr_block" {
   description = "Inspection VPC CIDR"
   value       = module.dev-inspection.vpc_cidr_block
 }
-
 output "transit_subnet_az_0" {
-  description = "Transit subnet CIDR (AZ 0)"
+  description = "The CIDR block for the transit subnet in AZ A."
   value       = module.dev-inspection.transit_subnet_az_0
+}
+output "az_a" {
+  description = "CIDR block for AZ index 0 (local.az_a)"
+  value       = module.dev-inspection.az_a
+}
+output "az_b" {
+  description = "CIDR block for AZ index 1 (local.az_b)"
+  value       = module.dev-inspection.az_b
 }
 output "transit_subnet_az_1" {
   description = "Transit subnet CIDR (AZ 1)"

@@ -10,22 +10,21 @@ output "transit_subnet_az_1" {
   description = "The CIDR block for the transit subnet in AZ B."
   value       = aws_subnet.transit_subnet_az_1.cidr_block
 }
-
 output "gwlbe_subnet_az_0" {
   description = "The CIDR block for the public subnet in AZ A."
-  value       = aws_subnet.public_subnet_az_0.cidr_block
+  value       = aws_subnet.gwlbe_subnet_az_0.cidr_block
 }
 output "gwlbe_subnet_az_1" {
   description = "The CIDR block for the public subnet in AZ B."
-  value       = aws_subnet.public_subnet_az_0.cidr_block
+  value       = aws_subnet.gwlbe_subnet_az_1.cidr_block
 }
 output "gwlb_subnet_az_0" {
   description = "The CIDR block for the public subnet in AZ A."
-  value       = aws_subnet.public_subnet_az_0.cidr_block
+  value       = aws_subnet.gwlb_subnet_az_0.cidr_block
 }
 output "gwlb_subnet_az_1" {
   description = "The CIDR block for the public subnet in AZ B."
-  value       = aws_subnet.public_subnet_az_0.cidr_block
+  value       = aws_subnet.gwlb_subnet_az_1.cidr_block
 }
 output "appliance_subnet_az_0" {
   description = "The CIDR block for the appliance subnet in AZ A."
@@ -81,4 +80,15 @@ output "bootstrap_s3_bucket" {
 output "bootstrap_init_cfg_s3_key" {
   description = "S3 object key for init-cfg.txt"
   value       = try(aws_s3_object.init_cfg[0].key, null)
+}
+
+# Base CIDRs for each AZ half of the VPC
+output "az_a" {
+  description = "CIDR block for AZ index 0 (local.az_a)"
+  value       = local.az_a
+}
+
+output "az_b" {
+  description = "CIDR block for AZ index 1 (local.az_b)"
+  value       = local.az_b
 }
