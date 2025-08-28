@@ -1,0 +1,59 @@
+resource "aws_route" "inspection_public_default_az_a" {
+  route_table_id         = aws_route_table.inspection_public_rt_az_a.id
+  destination_cidr_block = "0.0.0.0/0"
+  gateway_id             = aws_internet_gateway.inspection_igw.id
+}
+resource "aws_route" "inspection_public_default_az_b" {
+  route_table_id         = aws_route_table.inspection_public_rt_az_b.id
+  destination_cidr_block = "0.0.0.0/0"
+  gateway_id             = aws_internet_gateway.inspection_igw.id
+}
+resource "aws_route" "inspection_transit_default_az_a" {
+  route_table_id         = aws_route_table.inspection_transit_rt_az_a.id
+  destination_cidr_block = "0.0.0.0/0"
+  vpc_endpoint_id        = aws_vpc_endpoint.gwlb_endpoint_az_a.id
+}
+resource "aws_route" "inspection_transit_az_a_to_public_az_a" {
+  #This is for NLB return traffic to the NLB
+  route_table_id         = aws_route_table.inspection_transit_rt_az_a.id
+  destination_cidr_block = aws_subnet.inspection_public_subnet_az_a.cidr_block
+  vpc_endpoint_id        = aws_vpc_endpoint.gwlb_endpoint_az_a.id
+}
+resource "aws_route" "inspection_transit_az_a_to_public_az_b" {
+  #This is for NLB return traffic to the NLB
+  route_table_id         = aws_route_table.inspection_transit_rt_az_a.id
+  destination_cidr_block = aws_subnet.inspection_public_subnet_az_b.cidr_block
+  vpc_endpoint_id        = aws_vpc_endpoint.gwlb_endpoint_az_b.id
+}
+resource "aws_route" "inspection_transit_default_az_b" {
+  route_table_id         = aws_route_table.inspection_transit_rt_az_b.id
+  destination_cidr_block = "0.0.0.0/0"
+  vpc_endpoint_id        = aws_vpc_endpoint.gwlb_endpoint_az_b.id
+}
+resource "aws_route" "inspection_transit_az_b_to_public_az_a" {
+  #This is for NLB return traffic to the NLB
+  route_table_id         = aws_route_table.inspection_transit_rt_az_b.id
+  destination_cidr_block = aws_subnet.inspection_public_subnet_az_a.cidr_block
+  vpc_endpoint_id        = aws_vpc_endpoint.gwlb_endpoint_az_a.id
+}
+resource "aws_route" "inspection_transit_az_b_to_public_az_b" {
+  #This is for NLB return traffic to the NLB
+  route_table_id         = aws_route_table.inspection_transit_rt_az_b.id
+  destination_cidr_block = aws_subnet.inspection_public_subnet_az_b.cidr_block
+  vpc_endpoint_id        = aws_vpc_endpoint.gwlb_endpoint_az_b.id
+}
+resource "aws_route" "appliance_to_tgw_az_a" {
+  route_table_id         = aws_route_table.inspection_appliance_rt_az_a.id
+  destination_cidr_block = "10.0.0.0/8"
+  transit_gateway_id     = aws_ec2_transit_gateway.main.id
+}
+resource "aws_route" "appliance_to_tgw_az_b" {
+  route_table_id         = aws_route_table.inspection_appliance_rt_az_b.id
+  destination_cidr_block = "10.0.0.0/8"
+  transit_gateway_id     = aws_ec2_transit_gateway.main.id
+}
+resource "aws_route" "gwlbe_to_tgw" {
+  route_table_id         = aws_route_table.inspection_gwlbe_rt.id
+  destination_cidr_block = "0.0.0.0/0"
+  transit_gateway_id     = aws_ec2_transit_gateway.main.id
+}

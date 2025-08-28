@@ -1,6 +1,11 @@
+#ASN for INX = 
+#ASN for LD3 = 
+#ASN for LD7 = 
+
+
 resource "aws_ec2_transit_gateway" "main" {
   description                     = "Centralised Inspection TGW"
-  amazon_side_asn                 = 64512
+  amazon_side_asn                 = 64513
   auto_accept_shared_attachments  = "enable"
   default_route_table_association = "disable"
   default_route_table_propagation = "disable"

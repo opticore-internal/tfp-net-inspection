@@ -1,0 +1,73 @@
+##Not refactor
+
+resource "aws_route_table" "inspection_public_rt_az_a" {
+  vpc_id = aws_vpc.inspection.id
+  tags   = { Name = "inspection-public-rt-az-a" }
+}
+resource "aws_route_table_association" "inspection_public_assoc_az_a" {
+  subnet_id      = aws_subnet.inspection_public_subnet_az_a.id
+  route_table_id = aws_route_table.inspection_public_rt_az_a.id
+}
+resource "aws_route_table" "inspection_public_rt_az_b" {
+  vpc_id = aws_vpc.inspection.id
+  tags   = { Name = "inspection-public-rt-az-b" }
+}
+resource "aws_route_table_association" "inspection_public_assoc_az_b" {
+  subnet_id      = aws_subnet.inspection_public_subnet_az_b.id
+  route_table_id = aws_route_table.inspection_public_rt_az_b.id
+}
+resource "aws_route_table" "inspection_transit_rt_az_a" {
+  vpc_id = aws_vpc.inspection.id
+  tags   = { Name = "inspection-transit-rt-az-a" }
+}
+resource "aws_route_table_association" "inspection_transit_assoc_az_a" {
+  subnet_id      = aws_subnet.inspection_transit_subnet_az_a.id
+  route_table_id = aws_route_table.inspection_transit_rt_az_a.id
+}
+resource "aws_route_table" "inspection_transit_rt_az_b" {
+  vpc_id = aws_vpc.inspection.id
+  tags   = { Name = "inspection-transit-rt-az-b" }
+}
+resource "aws_route_table_association" "inspection_transit_assoc_az_b" {
+  subnet_id      = aws_subnet.inspection_transit_subnet_az_b.id
+  route_table_id = aws_route_table.inspection_transit_rt_az_b.id
+}
+resource "aws_route_table" "inspection_appliance_rt_az_a" {
+  vpc_id = aws_vpc.inspection.id
+  tags   = { Name = "inspection-appliance-rt-az-a" }
+}
+resource "aws_route_table_association" "inspection_appliance_assoc_az_a" {
+  subnet_id      = aws_subnet.inspection_appliance_subnet_az_a.id
+  route_table_id = aws_route_table.inspection_appliance_rt_az_a.id
+}
+resource "aws_route_table_association" "inspection_gwlb_assoc_az_a" { 
+  subnet_id      = aws_subnet.inspection_gwlb_subnet_az_a.id
+  route_table_id = aws_route_table.inspection_appliance_rt_az_a.id
+}
+
+resource "aws_route_table" "inspection_appliance_rt_az_b" {
+  vpc_id = aws_vpc.inspection.id
+  tags   = { Name = "inspection-appliance-rt-az-b" }
+}
+resource "aws_route_table_association" "inspection_appliance_assoc_az_b" {
+  subnet_id      = aws_subnet.inspection_appliance_subnet_az_b.id
+  route_table_id = aws_route_table.inspection_appliance_rt_az_b.id
+}
+resource "aws_route_table_association" "inspection_gwlb_assoc_az_b" {
+  subnet_id      = aws_subnet.inspection_gwlb_subnet_az_b.id
+  route_table_id = aws_route_table.inspection_appliance_rt_az_b.id
+}
+
+resource "aws_route_table" "inspection_gwlbe_rt" {
+  vpc_id = aws_vpc.inspection.id
+  tags   = { Name = "inspection-gwlbe-rt" }
+}
+
+resource "aws_route_table_association" "inspection_gwlbe_assoc_az_a" {
+  subnet_id      = aws_subnet.inspection_gwlbe_subnet_az_a.id
+  route_table_id = aws_route_table.inspection_gwlbe_rt.id
+}
+resource "aws_route_table_association" "inspection_gwlbe_assoc_az_b" {
+  subnet_id      = aws_subnet.inspection_gwlbe_subnet_az_b.id
+  route_table_id = aws_route_table.inspection_gwlbe_rt.id
+}
