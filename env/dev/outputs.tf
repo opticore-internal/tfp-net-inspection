@@ -83,3 +83,13 @@ output "bootstrap_init_cfg_s3_key" {
   description = "init-cfg.txt S3 key (if deployed)"
   value       = module.dev-inspection.bootstrap_init_cfg_s3_key
 }
+
+output "pafw1_mgmt_private_ip" {
+  description = "PAN1 mgmt private IP (if deployed)"
+  value       = module.dev-inspection.pafw1_mgmt_private_ip
+}
+
+output "pafw2_mgmt_private_ip" {
+  description = "PAN2 mgmt private IP (if deployed)"
+  value       = module.dev-inspection.pafw2_mgmt_private_ip
+}

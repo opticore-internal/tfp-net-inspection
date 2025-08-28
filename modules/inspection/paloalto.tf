@@ -11,7 +11,7 @@ resource "aws_network_interface" "pafw1_data_eni" {
 resource "aws_network_interface" "pafw1_mgmt_eni" {
   count            = var.deploy_pan ? 1 : 0
   subnet_id        = aws_subnet.public_subnet_az_0.id
-  private_ips      = [cidrhost(aws_subnet.public_subnet_az_0.cidr_block, 4)]
+  private_ips      = [cidrhost(aws_subnet.public_subnet_az_0.cidr_block, 5)]
   security_groups  = [aws_security_group.pan_mgmt_sg[0].id]
   description      = "pafw1 mgmt eni"
   tags             = merge(local.tags, { Name = "${local.prefix}-pan-mgmt-eni-az0" })
@@ -69,7 +69,7 @@ resource "aws_network_interface" "pafw2_data_eni" {
 resource "aws_network_interface" "pafw2_mgmt_eni" {
   count           = var.deploy_pan ? 1 : 0
   subnet_id       = aws_subnet.public_subnet_az_1.id
-  private_ips     = [cidrhost(aws_subnet.public_subnet_az_1.cidr_block, 4)]
+  private_ips     = [cidrhost(aws_subnet.public_subnet_az_1.cidr_block, 5)]
   security_groups = [aws_security_group.pan_mgmt_sg[0].id]
   description     = "pafw2 mgmt eni"
   tags            = merge(local.tags, { Name = "${local.prefix}-pafw2-mgmt-eni" })

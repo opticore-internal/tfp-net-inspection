@@ -4,7 +4,7 @@ module "dev-inspection" {
   env             = var.env
   vpc_region      = data.aws_region.current.id
   amazon_side_asn = 64513
-  deploy_pan      = false
+  deploy_pan      = true
   deploy_spokes   = false
   deploy_nlb      = false
 }
