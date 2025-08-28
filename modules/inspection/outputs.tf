@@ -43,6 +43,14 @@ output "public_subnet_az_1" {
   description = "The CIDR block for the public subnet in AZ B."
   value       = aws_subnet.public_subnet_az_1.cidr_block
 }
+output "mgmt_subnet_az_0" {
+  description = "The CIDR block for the management subnet in AZ A."
+  value       = aws_subnet.mgmt_subnet_az_0.cidr_block
+}
+output "mgmt_subnet_az_1" {
+  description = "The CIDR block for the management subnet in AZ B."
+  value       = aws_subnet.mgmt_subnet_az_1.cidr_block
+}
 
 
 
