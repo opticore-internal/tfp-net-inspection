@@ -1,6 +1,6 @@
-#ASN for INX = 
-#ASN for LD3 = 
-#ASN for LD7 = 
+#ASN for INX = 65000
+#ASN for LD3 = 65133
+#ASN for LD7 = 65173
 
 
 resource "aws_ec2_transit_gateway" "main" {
