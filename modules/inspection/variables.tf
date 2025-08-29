@@ -71,42 +71,6 @@ variable "pan_key_name" {
   default     = "aws-tgw-paloalto-key"
 }
 
-# variable "pan_ip_mgmt_az_0" {
-#   description = "PAN mgmt IP in AZ index 0 public subnet"
-#   type        = string
-#   default     = "192.168.1.36"
-# }
-
-# variable "pan_ip_mgmt_az_1" {
-#   description = "PAN mgmt IP in AZ index 1 public subnet"
-#   type        = string
-#   default     = "192.168.2.36"
-# }
-
-# variable "pan_ip_data_az_0" {
-#   description = "PAN dataplane IP in AZ index 0 appliance subnet"
-#   type        = string
-#   default     = "192.168.1.20"
-# }
-
-# variable "pan_ip_data_az_1" {
-#   description = "PAN dataplane IP in AZ index 1 appliance subnet"
-#   type        = string
-#   default     = "192.168.2.20"
-# }
-
-# variable "pan_ip_untrust_az_0" {
-#   description = "PAN untrust IP in AZ index 0 public subnet"
-#   type        = string
-#   default     = "192.168.1.37"
-# }
-
-# variable "pan_ip_untrust_az_1" {
-#   description = "PAN untrust IP in AZ index 1 public subnet"
-#   type        = string
-#   default     = "192.168.2.37"
-# }
-
 variable "public_rfc1918_through_gwlbe" {
   description = "Add RFC1918 routes in public RTs towards GWLB Endpoints per AZ."
   type        = bool
@@ -180,6 +144,19 @@ variable "test_key_name" {
   type        = string
   default     = "aws-tgw-paloalto-key"
 }
+
+variable "spoke1_target_port" {
+  type        = number
+  description = "Additional SSH port to test on the instance"
+  default     = 2221
+}
+
+variable "spoke2_target_port" {
+  type        = number
+  description = "Additional SSH port to test on the instance"
+  default     = 2222
+}
+
 
 # Inbound NLB and demo flows
 variable "deploy_nlb" {

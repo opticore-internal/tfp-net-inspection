@@ -84,6 +84,13 @@ resource "aws_instance" "test_vm_spoke1" {
 
   user_data = <<-EOF
               #!/bin/bash
+              # Add extra SSH port to test SSH
+              if ! grep -q "^Port ${var.spoke1_target_port}" /etc/ssh/sshd_config; then
+                echo "Port ${var.spoke1_target_port}" >> /etc/ssh/sshd_config
+              fi
+
+              # Restart sshd to apply changes
+              systemctl restart sshd
               echo 'ec2-user:optiC0R3!' | chpasswd
             EOF
 
@@ -177,6 +184,13 @@ resource "aws_instance" "test_vm_spoke2" {
 
   user_data = <<-EOF
               #!/bin/bash
+              # Add extra SSH port to test SSH
+              if ! grep -q "^Port ${var.spoke2_target_port}" /etc/ssh/sshd_config; then
+                echo "Port ${var.spoke2_target_port}" >> /etc/ssh/sshd_config
+              fi
+
+              # Restart sshd to apply changes
+              systemctl restart sshd
               echo 'ec2-user:optiC0R3!' | chpasswd
             EOF
 
