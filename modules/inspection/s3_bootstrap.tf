@@ -63,3 +63,15 @@ resource "aws_s3_object" "bootstrap_xml" {
   content_type = "application/xml"
   etag         = filemd5(var.bootstrap_xml_path)
 }
+resource "aws_vpc_endpoint" "s3_gateway" {
+  vpc_id            = aws_vpc.this.id
+  service_name      = "com.amazonaws.${var.vpc_region}.s3"
+  vpc_endpoint_type = "Gateway"
+
+  route_table_ids = [
+    aws_route_table.appliance_rt_az_0.id,
+    aws_route_table.appliance_rt_az_1.id
+  ]
+
+  tags = merge(local.tags, { Name = "${local.name}-s3-gateway-endpoint" })
+}
