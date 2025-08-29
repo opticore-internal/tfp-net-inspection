@@ -6,7 +6,7 @@ locals {
 resource "aws_vpc" "spoke1" {
   count      = var.deploy_spokes ? 1 : 0
   cidr_block = var.spoke1_cidr
-  tags       = merge(local.tags, { Name = "${local.prefix}-spoke1-vpc" })
+  tags       = merge(local.tags, { Name = "${local.name}-spoke1-vpc" })
 }
 
 resource "aws_subnet" "spoke1_subnet" {
@@ -14,13 +14,13 @@ resource "aws_subnet" "spoke1_subnet" {
   vpc_id            = aws_vpc.spoke1[0].id
   cidr_block        = local.spoke1_subnet_cidr
   availability_zone = var.vpc_az_list[0]
-  tags              = merge(local.tags, { Name = "${local.prefix}-spoke1-subnet" })
+  tags              = merge(local.tags, { Name = "${local.name}-spoke1-subnet" })
 }
 
 resource "aws_route_table" "spoke1_rt" {
   count = var.deploy_spokes ? 1 : 0
   vpc_id = aws_vpc.spoke1[0].id
-  tags   = merge(local.tags, { Name = "${local.prefix}-spoke1-rt" })
+  tags   = merge(local.tags, { Name = "${local.name}-spoke1-rt" })
 }
 
 resource "aws_route_table_association" "spoke1_assoc" {
@@ -55,7 +55,7 @@ resource "aws_security_group" "test_vm_sg_spoke1" {
     cidr_blocks = ["0.0.0.0/0"]
   }
 
-  tags = merge(local.tags, { Name = "${local.prefix}-test-vm-sg-spoke1" })
+  tags = merge(local.tags, { Name = "${local.name}-test-vm-sg-spoke1" })
 }
 
 data "aws_ami" "amazon_linux" {
@@ -96,7 +96,7 @@ resource "aws_ec2_transit_gateway_vpc_attachment" "spoke1" {
   transit_gateway_id     = aws_ec2_transit_gateway.main.id
   vpc_id                 = aws_vpc.spoke1[0].id
   appliance_mode_support = "enable"
-  tags                   = merge(local.tags, { Name = "${local.prefix}-spoke1-tgw-attachment" })
+  tags                   = merge(local.tags, { Name = "${local.name}-spoke1-tgw-attachment" })
 }
 
 resource "aws_ec2_transit_gateway_route_table_propagation" "spoke1_to_spoke_rt" {
@@ -114,7 +114,7 @@ resource "aws_ec2_transit_gateway_route_table_association" "spoke1_assoc_to_insp
 resource "aws_vpc" "spoke2" {
   count      = var.deploy_spokes ? 1 : 0
   cidr_block = var.spoke2_cidr
-  tags       = merge(local.tags, { Name = "${local.prefix}-spoke2-vpc" })
+  tags       = merge(local.tags, { Name = "${local.name}-spoke2-vpc" })
 }
 
 resource "aws_subnet" "spoke2_subnet" {
@@ -122,13 +122,13 @@ resource "aws_subnet" "spoke2_subnet" {
   vpc_id            = aws_vpc.spoke2[0].id
   cidr_block        = local.spoke2_subnet_cidr
   availability_zone = var.vpc_az_list[0]
-  tags              = merge(local.tags, { Name = "${local.prefix}-spoke2-subnet" })
+  tags              = merge(local.tags, { Name = "${local.name}-spoke2-subnet" })
 }
 
 resource "aws_route_table" "spoke2_rt" {
   count = var.deploy_spokes ? 1 : 0
   vpc_id = aws_vpc.spoke2[0].id
-  tags   = merge(local.tags, { Name = "${local.prefix}-spoke2-rt" })
+  tags   = merge(local.tags, { Name = "${local.name}-spoke2-rt" })
 }
 
 resource "aws_route_table_association" "spoke2_assoc" {
@@ -163,7 +163,7 @@ resource "aws_security_group" "test_vm_sg_spoke2" {
     cidr_blocks = ["0.0.0.0/0"]
   }
 
-  tags = merge(local.tags, { Name = "${local.prefix}-test-vm-sg-spoke2" })
+  tags = merge(local.tags, { Name = "${local.name}-test-vm-sg-spoke2" })
 }
 
 resource "aws_instance" "test_vm_spoke2" {
@@ -189,7 +189,7 @@ resource "aws_ec2_transit_gateway_vpc_attachment" "spoke2" {
   transit_gateway_id     = aws_ec2_transit_gateway.main.id
   vpc_id                 = aws_vpc.spoke2[0].id
   appliance_mode_support = "enable"
-  tags                   = merge(local.tags, { Name = "${local.prefix}-spoke2-tgw-attachment" })
+  tags                   = merge(local.tags, { Name = "${local.name}-spoke2-tgw-attachment" })
 }
 
 resource "aws_ec2_transit_gateway_route_table_propagation" "spoke2_to_spoke_rt" {

@@ -9,7 +9,7 @@ resource "aws_security_group" "nlb_sg" {
     protocol    = "-1"
     cidr_blocks = ["0.0.0.0/0"]
   }
-  tags = merge(local.tags, { Name = "${local.prefix}-nlb-sg" })
+  tags = merge(local.tags, { Name = "${local.name}-nlb-sg" })
 }
 
 resource "aws_security_group_rule" "flow1_ingress" {
@@ -39,7 +39,7 @@ resource "aws_lb" "nlb" {
   load_balancer_type = "network"
   security_groups    = [aws_security_group.nlb_sg[0].id]
   subnets            = [aws_subnet.public_subnet_az_0.id, aws_subnet.public_subnet_az_1.id]
-  tags               = merge(local.tags, { Name = "${local.prefix}-inbound-nlb" })
+  tags               = merge(local.tags, { Name = "${local.name}-inbound-nlb" })
 }
 
 resource "aws_lb_target_group" "flow1_tg" {
@@ -50,6 +50,7 @@ resource "aws_lb_target_group" "flow1_tg" {
   vpc_id      = aws_vpc.this.id
   target_type = "ip"
   preserve_client_ip = false
+  tags        = merge(local.tags, { Name = "${local.name}-flow1-tg" })
   health_check {
     interval            = 30
     port                = "22"
@@ -86,6 +87,7 @@ resource "aws_lb_target_group" "flow2_tg" {
   vpc_id      = aws_vpc.this.id
   target_type = "ip"
   preserve_client_ip = false
+  tags        = merge(local.tags, { Name = "${local.name}-flow2-tg" })
   health_check {
     interval            = 30
     port                = "22"

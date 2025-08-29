@@ -29,7 +29,7 @@ resource "aws_security_group" "pan_mgmt_sg" {
     cidr_blocks = ["0.0.0.0/0"]
     }
 
-  tags = merge(local.tags, { Name = "${local.prefix}-pan-mgmt-sg" })
+  tags = merge(local.tags, { Name = "${local.name}-pan-mgmt-sg" })
 }
 
 resource "aws_security_group" "pan_data_sg" {
@@ -51,7 +51,7 @@ resource "aws_security_group" "pan_data_sg" {
     cidr_blocks = ["0.0.0.0/0"]
     }
 
-  tags = merge(local.tags, { Name = "${local.prefix}-pan-data-sg" })
+  tags = merge(local.tags, { Name = "${local.name}-pan-data-sg" })
 }
 
 resource "aws_security_group" "pan_untrust_sg" {
@@ -73,6 +73,6 @@ resource "aws_security_group" "pan_untrust_sg" {
     cidr_blocks = ["0.0.0.0/0"]
     }
 
-  tags = merge(local.tags, { Name = "${local.prefix}-pan-untrust-sg" })
+  tags = merge(local.tags, { Name = "${local.name}-pan-untrust-sg" })
 }
 

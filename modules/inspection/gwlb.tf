@@ -15,6 +15,7 @@ resource "aws_lb_target_group" "gwlb_target_group" {
   protocol    = "GENEVE"
   vpc_id      = aws_vpc.this.id
   target_type = "ip"
+  tags        = merge(local.tags, { Name = "${local.name}-gwlb-tg" })
 
   health_check {
     enabled             = true

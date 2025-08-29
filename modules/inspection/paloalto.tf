@@ -5,7 +5,7 @@ resource "aws_network_interface" "pafw1_data_eni" {
   security_groups   = [aws_security_group.pan_data_sg[0].id]
   source_dest_check = false
   description       = "pafw1 data eni"
-  tags              = merge(local.tags, { Name = "${local.prefix}-pafw1-data-eni" })
+  tags              = merge(local.tags, { Name = "${local.name}-pafw1-data-eni" })
 }
 
 resource "aws_network_interface" "pafw1_mgmt_eni" {
@@ -14,7 +14,7 @@ resource "aws_network_interface" "pafw1_mgmt_eni" {
   private_ips      = [cidrhost(aws_subnet.public_subnet_az_0.cidr_block, 5)]
   security_groups  = [aws_security_group.pan_mgmt_sg[0].id]
   description      = "pafw1 mgmt eni"
-  tags             = merge(local.tags, { Name = "${local.prefix}-pan-mgmt-eni-az0" })
+  tags             = merge(local.tags, { Name = "${local.name}-pan-mgmt-eni-az0" })
 }
 
 resource "aws_network_interface" "pafw1_untrust_eni" {
@@ -23,7 +23,7 @@ resource "aws_network_interface" "pafw1_untrust_eni" {
   private_ips     = [cidrhost(aws_subnet.public_subnet_az_0.cidr_block, 4)]
   security_groups = [aws_security_group.pan_untrust_sg[0].id]
   description     = "pafw1 untrust eni"
-  tags            = merge(local.tags, { Name = "${local.prefix}-pafw1-untrust-eni" })
+  tags            = merge(local.tags, { Name = "${local.name}-pafw1-untrust-eni" })
 }
 
 resource "aws_instance" "pafw1" {
@@ -63,7 +63,7 @@ resource "aws_network_interface" "pafw2_data_eni" {
   security_groups   = [aws_security_group.pan_data_sg[0].id]
   source_dest_check = false
   description       = "pafw2 data eni"
-  tags              = merge(local.tags, { Name = "${local.prefix}-pafw2-data-eni" })
+  tags              = merge(local.tags, { Name = "${local.name}-pafw2-data-eni" })
 }
 
 resource "aws_network_interface" "pafw2_mgmt_eni" {
@@ -72,7 +72,7 @@ resource "aws_network_interface" "pafw2_mgmt_eni" {
   private_ips     = [cidrhost(aws_subnet.public_subnet_az_1.cidr_block, 5)]
   security_groups = [aws_security_group.pan_mgmt_sg[0].id]
   description     = "pafw2 mgmt eni"
-  tags            = merge(local.tags, { Name = "${local.prefix}-pafw2-mgmt-eni" })
+  tags            = merge(local.tags, { Name = "${local.name}-pafw2-mgmt-eni" })
 }
 
 resource "aws_network_interface" "pafw2_untrust_eni" {
@@ -81,7 +81,7 @@ resource "aws_network_interface" "pafw2_untrust_eni" {
   private_ips     = [cidrhost(aws_subnet.public_subnet_az_1.cidr_block, 4)]
   security_groups = [aws_security_group.pan_untrust_sg[0].id]
   description     = "pafw2 untrust eni"
-  tags            = merge(local.tags, { Name = "${local.prefix}-pafw2-untrust-eni" })
+  tags            = merge(local.tags, { Name = "${local.name}-pafw2-untrust-eni" })
 }
 
 resource "aws_instance" "pafw2" {

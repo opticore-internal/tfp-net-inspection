@@ -2,6 +2,7 @@ resource "aws_elasticache_subnet_group" "pafw_redis" {
   count      = var.deploy_pan ? 1 : 0
   name       = "pafw-redis-subnet-group"
   subnet_ids = [aws_subnet.appliance_subnet_az_0.id, aws_subnet.appliance_subnet_az_1.id]
+  tags       = merge(local.tags, { Name = "${local.name}-redis-subnet-group" })
 }
 
 resource "aws_security_group" "pafw_redis_sg" {
@@ -24,7 +25,7 @@ resource "aws_security_group" "pafw_redis_sg" {
     cidr_blocks = ["0.0.0.0/0"]
   }
 
-  tags = merge(local.tags, { Name = "${local.prefix}-redis-sg" })
+  tags = merge(local.tags, { Name = "${local.name}-redis-sg" })
 }
 
 resource "aws_elasticache_replication_group" "pafw_redis" {
@@ -44,4 +45,5 @@ resource "aws_elasticache_replication_group" "pafw_redis" {
   subnet_group_name             = aws_elasticache_subnet_group.pafw_redis[0].name
   security_group_ids            = [aws_security_group.pafw_redis_sg[0].id]
   apply_immediately             = true
+  tags                          = merge(local.tags, { Name = "${local.name}-redis" })
 }

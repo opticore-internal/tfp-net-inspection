@@ -1,6 +1,7 @@
 resource "aws_iam_role" "pan_s3_read_role" {
   count = var.deploy_pan ? 1 : 0
   name  = "pan-bootstrap-role"
+  tags  = merge(local.tags, { Name = "${local.name}-pan-bootstrap-role" })
 
   assume_role_policy = jsonencode({
     Version = "2012-10-17",
@@ -15,6 +16,7 @@ resource "aws_iam_role" "pan_s3_read_role" {
 resource "aws_iam_policy" "pan_s3_read_policy" {
   count = var.deploy_pan ? 1 : 0
   name  = "pan-bootstrap-read-policy"
+  tags  = merge(local.tags, { Name = "${local.name}-pan-bootstrap-read-policy" })
 
   policy = jsonencode({
     Version = "2012-10-17",
@@ -40,4 +42,3 @@ resource "aws_iam_instance_profile" "pan_instance_profile" {
   name  = "pan-bootstrap-instance-profile"
   role  = aws_iam_role.pan_s3_read_role[0].name
 }
-
