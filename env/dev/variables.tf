@@ -10,3 +10,20 @@ variable "vpc_cidr_block" {
   default     = "10.99.8.0/21"
 }
 
+variable "amazon_side_asn" {
+  description = "ASN for the inspection VPC TGW"
+  type        = string
+  default     = "64513"
+}
+
+variable "deploy_spokes" {
+  description = "Deploy demo Spoke VPCs and test instances"
+  type        = bool
+  default     = true
+}
+
+variable "deploy_nlb" {
+  description = "Deploy inbound NLB for demo flows"
+  type        = bool
+  default     = true
+}

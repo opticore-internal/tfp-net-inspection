@@ -1,3 +1,19 @@
+# transit 0
+# gwlbe 3
+# gwlb 4
+# appliance 1
+# public 2
+# mgmt 5
+
+# transit 0
+# gwlbe 1
+# gwlb 2
+# appliance 3
+# public 4
+# mgmt 5
+
+
+
 ===== FILE: ./env/dev/inspection.tf =====
 module "dev-inspection" {
   source = "../../modules/inspection"

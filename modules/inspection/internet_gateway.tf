@@ -1,9 +1,5 @@
 resource "aws_internet_gateway" "this" {
   vpc_id = aws_vpc.this.id
-
-tags = {
-  Name = "tfp-${var.env}-net-${lookup(var.vpc_region_shortname, var.vpc_region)}-igw"
-  }
+  tags   = merge(local.tags, { Name = "${local.name}-igw" })
 }
-
 
