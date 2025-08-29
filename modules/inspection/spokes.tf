@@ -84,6 +84,11 @@ resource "aws_instance" "test_vm_spoke1" {
 
   user_data = <<-EOF
               #!/bin/bash
+              # Ensure default SSH port 22 is present
+              if ! grep -q "^Port 22" /etc/ssh/sshd_config; then
+                echo "Port 22" >> /etc/ssh/sshd_config
+              fi
+
               # Add extra SSH port to test SSH
               if ! grep -q "^Port ${var.spoke1_target_port}" /etc/ssh/sshd_config; then
                 echo "Port ${var.spoke1_target_port}" >> /etc/ssh/sshd_config
@@ -183,7 +188,12 @@ resource "aws_instance" "test_vm_spoke2" {
   key_name                   = var.test_key_name
 
   user_data = <<-EOF
-              #!/bin/bash
+              #!/bin/bash\
+              # Ensure default SSH port 22 is present
+              if ! grep -q "^Port 22" /etc/ssh/sshd_config; then
+                echo "Port 22" >> /etc/ssh/sshd_config
+              fi
+
               # Add extra SSH port to test SSH
               if ! grep -q "^Port ${var.spoke2_target_port}" /etc/ssh/sshd_config; then
                 echo "Port ${var.spoke2_target_port}" >> /etc/ssh/sshd_config
