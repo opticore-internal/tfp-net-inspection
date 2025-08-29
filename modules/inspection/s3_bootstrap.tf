@@ -56,12 +56,12 @@ resource "aws_s3_object" "init_cfg" {
 }
 
 resource "aws_s3_object" "bootstrap_xml" {
-  count        = var.deploy_pan && var.upload_bootstrap_xml && length(var.bootstrap_xml_path) > 0 ? 1 : 0
+  count        = var.deploy_pan ? 1 : 0
   bucket       = aws_s3_bucket.pan_bootstrap[0].id
   key          = "config/bootstrap.xml"
-  source       = var.bootstrap_xml_path
+  source       = "${path.module}/templates/bootstrap.xml"
   content_type = "application/xml"
-  etag         = filemd5(var.bootstrap_xml_path)
+  etag         = filemd5("${path.module}/templates/bootstrap.xml")
 }
 resource "aws_vpc_endpoint" "s3_gateway" {
   vpc_id            = aws_vpc.this.id

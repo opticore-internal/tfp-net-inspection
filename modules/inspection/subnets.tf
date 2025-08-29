@@ -63,13 +63,13 @@ resource "aws_subnet" "mgmt_subnet_az_0"{
   vpc_id            = aws_vpc.this.id
   cidr_block        = cidrsubnet(local.az_a, 6, 5)
   availability_zone = var.vpc_az_list[0]
-  tags              = merge(local.tags, { Name = "${local.name}-vpc-${local.az_code[0]}-public" })
+  tags              = merge(local.tags, { Name = "${local.name}-vpc-${local.az_code[0]}-mgmt" })
 }
 resource "aws_subnet" "mgmt_subnet_az_1"{
   vpc_id            = aws_vpc.this.id
   cidr_block        = cidrsubnet(local.az_b, 6, 5)
   availability_zone = var.vpc_az_list[1]
-  tags              = merge(local.tags, { Name = "${local.name}-vpc-${local.az_code[1]}-public" })
+  tags              = merge(local.tags, { Name = "${local.name}-vpc-${local.az_code[1]}-mgmt" })
 }
 
 

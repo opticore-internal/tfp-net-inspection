@@ -71,11 +71,6 @@ variable "pan_key_name" {
   default     = "aws-tgw-paloalto-key"
 }
 
-variable "public_rfc1918_through_gwlbe" {
-  description = "Add RFC1918 routes in public RTs towards GWLB Endpoints per AZ."
-  type        = bool
-  default     = false
-}
 
 variable "bootstrap_bucket_name" {
   description = "S3 bucket name for PAN bootstrap files (must be globally unique)."
@@ -96,17 +91,6 @@ variable "redis_port" {
   default     = 6379
 }
 
-variable "upload_bootstrap_xml" {
-  description = "If true, upload bootstrap.xml to S3 from provided local path."
-  type        = bool
-  default     = false
-}
-
-variable "bootstrap_xml_path" {
-  description = "Local filesystem path to bootstrap.xml when upload_bootstrap_xml is true."
-  type        = string
-  default     = ""
-}
 
 # Spoke VPCs, TGW attachments, and test instances
 variable "deploy_spokes" {

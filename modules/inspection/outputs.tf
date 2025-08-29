@@ -80,6 +80,27 @@ output "bootstrap_init_cfg_s3_key" {
   value       = try(aws_s3_object.init_cfg[0].key, null)
 }
 
+# NLB outputs (for external flow modules)
+output "nlb_arn" {
+  description = "ARN of the inbound NLB (if created)"
+  value       = try(aws_lb.nlb[0].arn, null)
+}
+
+output "nlb_dns_name" {
+  description = "DNS name of the inbound NLB (if created)"
+  value       = try(aws_lb.nlb[0].dns_name, null)
+}
+
+output "nlb_sg_id" {
+  description = "Security group ID attached to the NLB (if created)"
+  value       = try(aws_security_group.nlb_sg[0].id, null)
+}
+
+output "vpc_id" {
+  description = "VPC ID of the inspection VPC"
+  value       = aws_vpc.this.id
+}
+
 # Base CIDRs
 output "az_a" {
   description = "CIDR block for AZ index 0 (local.az_a)."
@@ -99,4 +120,25 @@ output "pafw1_mgmt_private_ip" {
 output "pafw2_mgmt_private_ip" {
   description = "Private IP of PAN2 management ENI."
   value       = try(one(aws_network_interface.pafw2_mgmt_eni[*].private_ip), null)
+}
+
+# Spoke test instance outputs (for demo flows)
+output "spoke1_instance_private_ip" {
+  description = "Private IP of test VM in Spoke 1 (if created)"
+  value       = try(aws_instance.test_vm_spoke1[0].private_ip, null)
+}
+
+output "spoke1_instance_az" {
+  description = "AZ of test VM in Spoke 1 (if created)"
+  value       = try(aws_instance.test_vm_spoke1[0].availability_zone, null)
+}
+
+output "spoke2_instance_private_ip" {
+  description = "Private IP of test VM in Spoke 2 (if created)"
+  value       = try(aws_instance.test_vm_spoke2[0].private_ip, null)
+}
+
+output "spoke2_instance_az" {
+  description = "AZ of test VM in Spoke 2 (if created)"
+  value       = try(aws_instance.test_vm_spoke2[0].availability_zone, null)
 }

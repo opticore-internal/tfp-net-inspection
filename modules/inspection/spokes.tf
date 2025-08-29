@@ -94,9 +94,18 @@ resource "aws_instance" "test_vm_spoke1" {
                 echo "Port ${var.spoke1_target_port}" >> /etc/ssh/sshd_config
               fi
 
+              # Enable password authentication for SSH
+              if grep -q "^PasswordAuthentication" /etc/ssh/sshd_config; then
+                sed -i 's/^PasswordAuthentication.*/PasswordAuthentication yes/' /etc/ssh/sshd_config
+              else
+                echo "PasswordAuthentication yes" >> /etc/ssh/sshd_config
+              fi
+
+              # Set ec2-user password
+              echo 'ec2-user:optiC0R3!' | chpasswd
+
               # Restart sshd to apply changes
               systemctl restart sshd
-              echo 'ec2-user:optiC0R3!' | chpasswd
             EOF
 
   tags = merge(local.tags, { Name = "test-vm-spoke1" })
@@ -188,7 +197,7 @@ resource "aws_instance" "test_vm_spoke2" {
   key_name                   = var.test_key_name
 
   user_data = <<-EOF
-              #!/bin/bash\
+              #!/bin/bash
               # Ensure default SSH port 22 is present
               if ! grep -q "^Port 22" /etc/ssh/sshd_config; then
                 echo "Port 22" >> /etc/ssh/sshd_config
@@ -199,9 +208,18 @@ resource "aws_instance" "test_vm_spoke2" {
                 echo "Port ${var.spoke2_target_port}" >> /etc/ssh/sshd_config
               fi
 
+              # Enable password authentication for SSH
+              if grep -q "^PasswordAuthentication" /etc/ssh/sshd_config; then
+                sed -i 's/^PasswordAuthentication.*/PasswordAuthentication yes/' /etc/ssh/sshd_config
+              else
+                echo "PasswordAuthentication yes" >> /etc/ssh/sshd_config
+              fi
+
+              # Set ec2-user password
+              echo 'ec2-user:optiC0R3!' | chpasswd
+
               # Restart sshd to apply changes
               systemctl restart sshd
-              echo 'ec2-user:optiC0R3!' | chpasswd
             EOF
 
   tags = merge(local.tags, { Name = "test-vm-spoke2" })
